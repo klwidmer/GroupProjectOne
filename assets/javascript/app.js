@@ -34,3 +34,5 @@ $.ajax({
 }).then(function(response) {
   console.log(response);
 });
+
+// News API
