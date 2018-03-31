@@ -42,3 +42,9 @@ $('document').ready(function() {
   });
 });
 
+
+
+
+// News API
+
+
