@@ -36,6 +36,7 @@ h5 {
   font-size: 36px;
   display: inline-block;
   text-align: center;
+  color: #00bcd4;
 }
 
 .card-action-social {
@@ -45,4 +46,14 @@ h5 {
 #social-links {
   margin-right: 5px;
   margin-left: 5px;
+}
+
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
+  color: #00bcd4;
+  webkit-transition: color .3s ease;
+}
+
+.card-title{
+  font-weight: bold;
+  color: #00bcd4;
 }
