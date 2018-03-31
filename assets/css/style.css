@@ -21,6 +21,11 @@ header {
 .header-text {
   position: absolute;
   bottom: 0;
+  
+}
+
+body {
+  background-color: white
 }
 
 h5 {
@@ -31,3 +36,30 @@ h5 {
   background-color: rgba(0, 0, 0, 0.3);
   text-align: center;
 }
+
+ /* h4 {
+  font-family: 'Playball', cursive;
+} */
+ 
+/* h5{
+  font-family: 'Pacifico', cursive;
+} */
+/* h5{
+  font-family: 'Playball', cursive;
+  
+} */
+
+ /* h5{
+  font-family: 'Pinyon Script', cursive;
+} */
+
+h5{
+  font-family: 'Fredericka the Great', cursive;
+} 
+
+/* h5{
+  font-family: 'Rouge Script', cursive;
+}
+
+
+
