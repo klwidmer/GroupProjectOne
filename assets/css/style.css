@@ -30,6 +30,7 @@ h5 {
   padding: 40px;
   background-color: rgba(0, 0, 0, 0.3);
   text-align: center;
+  
 }
 
 .iconholder {
@@ -60,4 +61,8 @@ h5 {
 
 .btn {
   background-color: #00bcd4;
+}
+
+input {
+  background-color: rgb(230, 230, 230);
 }
