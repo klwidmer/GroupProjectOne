@@ -37,29 +37,33 @@ h5 {
   text-align: center;
 }
 
- /* h4 {
-  font-family: 'Playball', cursive;
-} */
- 
-/* h5{
-  font-family: 'Pacifico', cursive;
-} */
-/* h5{
-  font-family: 'Playball', cursive;
-  
-} */
-
- /* h5{
-  font-family: 'Pinyon Script', cursive;
-} */
-
-h5{
-  font-family: 'Fredericka the Great', cursive;
-} 
-
-/* h5{
-  font-family: 'Rouge Script', cursive;
+.iconholder {
+  font-size: 36px;
+  display: inline-block;
+  text-align: center;
+  color: #00bcd4;
 }
 
+.card-action-social {
+  text-align: center;
+}
 
+#social-links {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
+  color: #00bcd4;
+  webkit-transition: color .3s ease;
+}
+
+.card-title{
+  font-weight: bold;
+  color: #00bcd4;
+}
+
+.btn {
+  background-color: #00bcd4;
+}
 
