@@ -31,3 +31,7 @@ h5 {
   background-color: rgba(0, 0, 0, 0.3);
   text-align: center;
 }
+
+.social-links {
+  height: 100px;
+}
