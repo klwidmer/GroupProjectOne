@@ -32,6 +32,17 @@ h5 {
   text-align: center;
 }
 
-.social-links {
-  height: 100px;
+.iconholder {
+  font-size: 36px;
+  display: inline-block;
+  text-align: center;
+}
+
+.card-action-social {
+  text-align: center;
+}
+
+#social-links {
+  margin-right: 5px;
+  margin-left: 5px;
 }
