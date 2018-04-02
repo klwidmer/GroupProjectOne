@@ -19,7 +19,30 @@
         <div class="nav-wrapper container">
             <a href="#" class="brand-logo left">Top of the Day</a>
             <ul id="nav-mobile" class="right">
-            <li><a>Settings</a></li>
+                <li>
+                <!-- Modal Trigger -->
+                    <a class="waves-effect waves-light btn modal-trigger" href="#modal">Customize Your Page Content</a>
+      
+                <!-- Modal Structure -->
+                <div id="modal1" class="modal">
+                    <div class="modal-content blue-grey darken-4">
+                        <h4>Welcome!</h4>
+                        <p>Please complete the form below to help us customize your page!</p>
+                        <div class="row">
+                            <form class="col s12">
+                                <div class="input-field">
+                                  <input id="zip-code-input" placeholder="55555" type="number" min="00000" max="99999" class="validate">
+                                  <label class="active" for="zip-code">Zip Code</label>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="topic-buttons"></div>
+                    </div>
+                    <div class="modal-footer blue-grey lighten-5">
+                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Let's go!</a>
+                    </div>
+                </div>
+                </li>
             </ul>
         </div>
     </nav>
@@ -35,7 +58,7 @@
     <div class="container">
     <br>
      <div class="row">
-            <div class="col m8">
+            <div class="col m8" id="article-dump">
      
                     <div class="card blue-grey lighten-5">
                         <div class="card-content">
