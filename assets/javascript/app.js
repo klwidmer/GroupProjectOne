@@ -11,6 +11,22 @@ $('document').ready(function() {
     method: 'GET',
   }).then(function(response) {
     console.log(response);
+    const weatherIcon = $('<img>').attr('src', response.current_observation.icon_url);
+    weatherIcon.addClass('weather-image');
+    const location = response.current_observation.display_location.full;
+    const temperature = response.current_observation.temp_f;
+    const condition = response.current_observation.weather;
+    const wind = response.current_observation.wind_string;
+    const precipitation = response.current_observation.precip_today_in;
+    const weatherURL = response.current_observation.ob_url;
+    const conditionSentence = $('<h6>').addClass('weather-overview');
+    conditionSentence.text(`Currently ${condition} and ${temperature} degrees in ${location}`);
+    const bigTemp = $('<h3>').text(temperature);
+    bigTemp.addClass('currentTempBig');
+    const windSentence = $('<p>').text(`Wind: ${wind}`);
+    const precipSentence = $('<p>').text(`Precipitation: ${precipitation} in. expected today`);
+    $('#weatherIcon').append(weatherIcon, bigTemp, conditionSentence, windSentence, precipSentence);
+    $('#weatherURL').attr('href', weatherURL);
   });
 
   // quote API
