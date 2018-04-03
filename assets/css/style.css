@@ -1,33 +1,28 @@
 .container {
   width: 90%;
 }
-
 nav {
   background-color: rgb(46, 45, 45);
 }
-
 header {
   position: relative;
   height: 450px;
   overflow: hidden;
 }
-
 .headerimage {
   min-width: 100%;
   max-width: 150%;
   min-height: 100%;
 }
-
 .header-text {
   position: absolute;
   bottom: 0;
+  width: 100%;
   
 }
-
 body {
   background-color: white
 }
-
 h5 {
   color: white;
   font-style: italic;
@@ -35,39 +30,55 @@ h5 {
   padding: 40px;
   background-color: rgba(0, 0, 0, 0.3);
   text-align: center;
-  
 }
-
 .iconholder {
   font-size: 36px;
   display: inline-block;
   text-align: center;
   color: #00bcd4;
 }
-
 .card-action-social {
   text-align: center;
 }
-
 #social-links {
   margin-right: 5px;
   margin-left: 5px;
 }
-
 .card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
   color: #00bcd4;
   webkit-transition: color .3s ease;
 }
-
 .card-title{
   font-weight: bold;
-  color: #00bcd4;
+  color: rgb(46, 45, 45);
 }
-
 .btn {
   background-color: #00bcd4;
 }
-
 input {
   background-color: rgb(230, 230, 230);
+}
+.weather-image {
+  width: 26%;
+  margin-left: 37%;
+  margin-right: 37%;
+}
+/* #weatherIcon {
+  display: inline-block;
+} */
+#weatherIcon p {
+  font-size: 12px;
+  text-align: center;
+  margin-bottom: 4px;
+}
+.weather-overview {
+  text-align: center;
+  font-size: 18px;
+  line-height: 1.5;
+}
+.currentTempBig{
+  font-size: 36px;
+  color: #00bcd4;
+  text-align: center;
+  margin-top: 10px;
 }

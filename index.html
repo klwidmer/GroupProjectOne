@@ -19,7 +19,30 @@
         <div class="nav-wrapper container">
             <a href="#" class="brand-logo left">Top of the Day</a>
             <ul id="nav-mobile" class="right">
-            <li><a>Settings</a></li>
+                <li>
+                <!-- Modal Trigger -->
+                    <a class="waves-effect waves-light btn modal-trigger" href="#modal">Customize Your Page Content</a>
+      
+                <!-- Modal Structure -->
+                <div id="modal1" class="modal">
+                    <div class="modal-content blue-grey darken-4">
+                        <h4>Welcome!</h4>
+                        <p>Please complete the form below to help us customize your page!</p>
+                        <div class="row">
+                            <form class="col s12">
+                                <div class="input-field">
+                                  <input id="zip-code-input" placeholder="55555" type="number" min="00000" max="99999" class="validate">
+                                  <label class="active" for="zip-code">Zip Code</label>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="topic-buttons"></div>
+                    </div>
+                    <div class="modal-footer blue-grey lighten-5">
+                        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Let's go!</a>
+                    </div>
+                </div>
+                </li>
             </ul>
         </div>
     </nav>
@@ -37,46 +60,10 @@
      <div class="row">
             <div class="col m8">
      
-                    <div class="card blue-grey lighten-5">
-                        <div class="card-content">
-                            <span class="card-title">Card Title</span>
-                            <p>I am a very simple card. I am good at containing small bits of information.
-                            I am convenient because I require little markup to use effectively.</p>
-                        </div>
-                        <div class="card-action">
-                            <a href="#">This is a link</a>
-                            <a href="#">This is a link</a>
-                        </div>
-                    </div>
+                <ul class="collapsible" id="article-dump">
 
-                    <div class="card blue-grey lighten-5">
-                        <div class="card-content">
-
-                            <span class="card-title">Card Title</span>
-                            <p>I am a very simple card. I am good at containing small bits of information.
-                            I am convenient because I require little markup to use effectively.</p>
-                        </div>
-                        <div class="card-action">
-                            <a href="#">This is a link</a>
-                            <a href="#">This is a link</a>
-                        </div>
-                    </div>
-
-                    
-
-                    <div class="card blue-grey lighten-5">
-                        <div class="card-content">
-
-                            <span class="card-title">Card Title</span>
-                            <p>I am a very simple card. I am good at containing small bits of information.
-                            I am convenient because I require little markup to use effectively.</p>
-                        </div>
-                        <div class="card-action">
-                            <a href="#">This is a link</a>
-                            <a href="#">This is a link</a>
-                        </div>
-                    </div>
-
+                </ul>
+                
             </div>
             <div class="col m4">
 
@@ -108,34 +95,14 @@
                     <div class="card-content black-text">
 
                         <span class="card-title">Weather</span>
-                        <p>I am a very simple card. I am good at containing small bits of information.
-                        I am convenient because I require little markup to use effectively.</p>
                     </div>
+                    <div id="weatherIcon"></div>
                     <div class="card-action">
-
-
-                        <form id="zip-code-form">
-                                <label for="zip-input">Enter your zip code:</label>
-                                <input type="text" id="zip-input">
-                                <div class="btn cyan" id="submit-zip">
-                                    Submit
-                                </div>
-                            </form>
-                            <br>
-
-                        <a href="#">This is a link</a>
-                        <a href="#">This is a link</a>
+                            <a id="weatherURL" href="#">More weather info</a>
                     </div>
                 </div>
              </div>
-
-
-    <!-- </div>  
-
-    </div> -->
-
-
-    </div>  
+        </div>  
 
     </div>
 
