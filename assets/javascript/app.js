@@ -1,7 +1,7 @@
 $('document').ready(function() {
   // wunderground API
 
-  let zipCode;
+  let zipCode = 55102;
   const weatherKey = '97be962b96e69fba';
   const weatherUrl = `http://api.wunderground.com/api/${weatherKey}/conditions/q/${zipCode}.json`;
 
@@ -65,6 +65,10 @@ $('document').ready(function() {
   // select and initialize modal
   const elemModal = document.querySelector('.modal');
   const instanceModal = M.Modal.init(elemModal);
+
+  // initialize collapsible
+  const elemCollapse = document.querySelector('.collapsible');
+  const instanceCollapse = M.Collapsible.init(elemCollapse);
 
   // open modal using the customize button
   $('.modal-trigger').click(function(event) {
