@@ -39,12 +39,12 @@ $('document').ready(function() {
     $('#quote').text(result.quote.body);
   });
 
-  const section = ['home', 'world', 'technology', 'sports', 'travel', 'food', 'automobiles', 'arts'];
+  const section = ['Home', 'World', 'Technology', 'Sports', 'Travel', 'Food', 'Automobiles', 'Arts'];
 
   function displayModalTopicChoices() {
     $('#topic-buttons').empty();
     for (let i = 0; i < section.length; i++) {
-      const pTopicChoice = $('<p>');
+      const pTopicChoice = $('<div>');
       const labelTopicChoice = $('<label>');
       const inputTopicChoice = $('<input type="checkbox" />');
       const textTopicChoice = $('<span>');
@@ -57,6 +57,9 @@ $('document').ready(function() {
       labelTopicChoice.append(textTopicChoice);
 
       $('#topic-buttons').append(pTopicChoice);
+  
+  
+
     }
   }
 
