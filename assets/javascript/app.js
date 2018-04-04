@@ -157,3 +157,19 @@ $('document').ready(function() {
   }
   addToUserNewsSettings();
 });
+
+
+
+
+
+
+const photoArray = ["assets/images/ivana-cajina-316246-unsplash.jpg", "assets/images/elena-prokofyeva-17909-unsplash.jpg", "assets/images/david-marcu-114194-unsplash.jpg", "assets/images/julia-caesar-15080-unsplash.jpg",
+"assets/images/andrey-grinkevich-358756-unsplash.jpg","assets/images/aron-reacher-549695-unsplash.jpg", "assets/images/ashley-rowe-5658-unsplash.jpg", "assets/images/dan-aragon-387257-unsplash.jpg",
+"assets/images/hugues-de-buyer-mimeure-335733-unsplash.jpg", "assets/images/irene-davila-45779-unsplash.jpg", "assets/images/marko-blazevic-423709-unsplash.jpg", "assets/images/testimage.jpg"]
+
+function randomPhoto (){
+	let index = Math.floor(Math.random() * photoArray.length)
+	$(".headerimage").attr("src", photoArray[index])
+}
+
+randomPhoto()
