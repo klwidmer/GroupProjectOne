@@ -86,3 +86,19 @@ input {
   text-align: center;
   margin-top: 10px;
 }
+
+
+p{
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 20px;
+}
+
+#zip-code-input {
+  -webkit-padding-start: 1%;
+  margin-top: 5%;
+}
+
+#topic-buttons{
+ -webkit-padding-start: 2%;
+}

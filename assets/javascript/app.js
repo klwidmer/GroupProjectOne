@@ -46,11 +46,13 @@ $('document').ready(function() {
     console.log(result.quote.body);
     $('#quote').text(result.quote.body);
   });
+
   const section = ['world', 'technology', 'sports', 'travel', 'food', 'automobiles', 'arts'];
+
   function displayModalTopicChoices() {
     $('#topic-buttons').empty();
     for (let k = 0; k < section.length; k++) {
-      const pTopicChoice = $('<p>');
+      const pTopicChoice = $('<div>');
       const labelTopicChoice = $('<label>');
       const inputTopicChoice = $('<input type="checkbox" />');
       const textTopicChoice = $('<span>');
@@ -61,6 +63,7 @@ $('document').ready(function() {
       textTopicChoice.text(section[k]);
       labelTopicChoice.append(textTopicChoice);
       $('#topic-buttons').append(pTopicChoice);
+
     }
   }
   let userTopicArray = [];
