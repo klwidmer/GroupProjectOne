@@ -1,10 +1,19 @@
+const photoArray = ["assets/images/ivana-cajina-316246-unsplash.jpg", "assets/images/elena-prokofyeva-17909-unsplash.jpg", "assets/images/david-marcu-114194-unsplash.jpg", "assets/images/julia-caesar-15080-unsplash.jpg",
+"assets/images/andrey-grinkevich-358756-unsplash.jpg","assets/images/aron-reacher-549695-unsplash.jpg", "assets/images/ashley-rowe-5658-unsplash.jpg", "assets/images/dan-aragon-387257-unsplash.jpg",
+"assets/images/hugues-de-buyer-mimeure-335733-unsplash.jpg", "assets/images/irene-davila-45779-unsplash.jpg", "assets/images/marko-blazevic-423709-unsplash.jpg", "assets/images/testimage.jpg"]
+
+function randomPhoto (){
+	let index = Math.floor(Math.random() * photoArray.length)
+	$(".headerimage").attr("src", photoArray[index])
+}
+
+randomPhoto()
+
 $('document').ready(function() {
   // wunderground API
-
   let zipCode = 55102;
   const weatherKey = '97be962b96e69fba';
   const weatherUrl = `http://api.wunderground.com/api/${weatherKey}/conditions/q/${zipCode}.json`;
-
   $.ajax({
     url: weatherUrl,
     dataType: 'jsonp',
@@ -28,7 +37,6 @@ $('document').ready(function() {
     $('#weatherIcon').append(weatherIcon, bigTemp, conditionSentence, windSentence, precipSentence);
     $('#weatherURL').attr('href', weatherURL);
   });
-
   // quote API
   const QuoteUrl = 'https://favqs.com/api/qotd';
   $.ajax({
@@ -38,82 +46,107 @@ $('document').ready(function() {
     console.log(result.quote.body);
     $('#quote').text(result.quote.body);
   });
-
-  const section = ['home', 'world', 'technology', 'sports', 'travel', 'food', 'automobiles', 'arts'];
-
+  const section = ['world', 'technology', 'sports', 'travel', 'food', 'automobiles', 'arts'];
   function displayModalTopicChoices() {
     $('#topic-buttons').empty();
-    for (let i = 0; i < section.length; i++) {
+    for (let k = 0; k < section.length; k++) {
       const pTopicChoice = $('<p>');
       const labelTopicChoice = $('<label>');
       const inputTopicChoice = $('<input type="checkbox" />');
       const textTopicChoice = $('<span>');
-
-      inputTopicChoice.attr('data-section-value', section[i]);
+      inputTopicChoice.attr('data-section-value', section[k]);
       inputTopicChoice.attr('id', 'topicInput');
       pTopicChoice.append(labelTopicChoice);
       labelTopicChoice.append(inputTopicChoice);
-      textTopicChoice.text(section[i]);
+      textTopicChoice.text(section[k]);
       labelTopicChoice.append(textTopicChoice);
-
       $('#topic-buttons').append(pTopicChoice);
     }
   }
-
   let userTopicArray = [];
-
   // select and initialize modal
   const elemModal = document.querySelector('.modal');
   const instanceModal = M.Modal.init(elemModal);
-
-  // initialize collapsible
-  const elemCollapse = document.querySelector('.collapsible');
-  const instanceCollapse = M.Collapsible.init(elemCollapse);
-
   // open modal using the customize button
   $('.modal-trigger').click(function(event) {
     event.preventDefault();
     instanceModal.open();
     displayModalTopicChoices();
   });
-
-  // store data to local storage when the modal-close button is pressed
-  $('.modal-close').click(function(event) {
-    event.preventDefault();
-    // capture user inputs and store them to variables
-    zipCode = $('#zip-code-input').val().trim();
-
-    userTopicArray = $('input:checked').map(function() {
-      return $(this).attr('data-section-value');
-    });
-
-    // console log to confirm we're capturing them
-    console.log(zipCode);
-    userTopicArray = userTopicArray.get();
-    console.log(userTopicArray);
-
-    // clear LocalStorage
-    localStorage.clear();
-
-    // store all content to LocalStorage
-    localStorage.setItem('zip', zipCode);
-    localStorage.setItem('userTopics', userTopicArray);
-  });
-
   const userTopicString = localStorage.getItem('userTopics');
   userTopicArray = userTopicString.split(',');
-
+  const userTopicTitles = [];
+  for (let t = 0; t < userTopicArray.length; t++) {
+    userTopicTitles[t] = userTopicArray[t].charAt(0).toUpperCase() + userTopicArray[t].slice(1);
+  }
   console.log(userTopicString);
   console.log(userTopicArray);
-
-
-  // start Bill's code
-  function addToUserNewsSettings() {
+  console.log(userTopicTitles);
+  // initialize collapsible
+  // const elemCollapse = document.querySelector('.collapsible');
+  // const instanceCollapse = M.Collapsible.init(elemCollapse);
+  // $('.collapsible').collapsible();
+  let topStoriesUrl = 'https://api.nytimes.com/svc/topstories/v2/home.json?';
+  topStoriesUrl += $.param({
+    'api-key': '11762ff764a447f59a19f692781b25d4',
+  });
+  $.ajax({
+    url: topStoriesUrl,
+    method: 'GET',
+  }).done(function(result) {
+    console.log(result);
+    for (let m = 0; m < 3; m++) {
+      const topStory = result.results[m];
+      // console.log(topStory);
+      // pull 3 top stories from nytime to put in carousel
+      if (m === 0) {
+        const firstHeadline = $('<div class="item active">');
+        const firstHeadlineImage = $('<img>').attr('src', topStory.multimedia[1].url);
+        firstHeadlineImage.attr('style', 'width: auto;');
+        const firstHeadlineCaption = $('<div class="carousel-caption">');
+        const linkHeadline1 = $('<a>').attr('href', topStory.url);
+        const firstHeadlineTitle = $('<h3>').text(topStory.title);
+        const firstHeadlineText = $('<p>').text(topStory.abstract);
+        linkHeadline1.append(firstHeadlineTitle);
+        firstHeadlineCaption.append(linkHeadline1, firstHeadlineText);
+        firstHeadline.append(firstHeadlineImage, firstHeadlineCaption);
+        $('#top-stories').append(firstHeadline);
+      } else {
+        const nextHeadline = $('<div class="item">');
+        const nextHeadlineImage = $('<img>').attr('src', topStory.multimedia[1].url);
+        nextHeadlineImage.attr('style', 'width: auto;');
+        const nextHeadlineCaption = $('<div class="carousel-caption">');
+        const linkHeadlineNext = $('<a>').attr('href', topStory.url);
+        const nextHeadlineTitle = $('<h3>').text(topStory.title);
+        const nextHeadlineText = $('<p>').text(topStory.abstract);
+        linkHeadlineNext.append(nextHeadlineTitle);
+        nextHeadlineCaption.append(linkHeadlineNext, nextHeadlineText);
+        nextHeadline.append(nextHeadlineImage, nextHeadlineCaption);
+        $('#top-stories').append(nextHeadline);
+      }
+    }
+  });
+  // function to populate list of news articles on page
+  function addToUserNewsList() {
     for (let j = 0; j < userTopicArray.length; j++) {
       const sectionValue = userTopicArray[j];
+      const sectionTitleValue = userTopicTitles[j];
       // $(this).attr('data-section-value');
       // console.log("SectionValue: " + sectionValue);
-
+      // // For collapsible feature... not currently working with dynamically generated classes
+      // const newCategory = $('<li>');
+      // const headerNewCategory = $('<div class="collapsible-header">');
+      // headerNewCategory.text(sectionValue);
+      // const bodyNewCategory = $('<div class="collapsible-body">');
+      // bodyNewCategory.attr('id', sectionValue);
+      // headerNewCategory.append(bodyNewCategory);
+      // newCategory.append(headerNewCategory);
+      // $('#article-dump').append(newCategory);
+      // Create headers and news category divs
+      const categoryDiv = $('<div class="category-div">');
+      const newsCategoryHeading = $('<h4>');
+      newsCategoryHeading.text(sectionTitleValue);
+      categoryDiv.append(newsCategoryHeading);
       let newsUrl = `https://api.nytimes.com/svc/topstories/v2/${sectionValue}.json?`;
       newsUrl += $.param({
         'api-key': '11762ff764a447f59a19f692781b25d4',
@@ -123,19 +156,17 @@ $('document').ready(function() {
         method: 'GET',
       }).done(function(result) {
         console.log(result);
-        const numOfArticles = result.results.length;
-        console.log(numOfArticles);
         // Creates all the page elements for articles
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 3; i++) {
           const currentArticle = result.results[i];
           console.log(currentArticle);
-          const newArticle = $('<div>');
-          newArticle.attr('class', 'article-div');
+          const newArticle = $('<div class="article-div card blue-grey lighten-5">');
+          const newArticleContent = $('<div class="card-content">');
           const linkElement = $('<a>');
           linkElement.attr('href', currentArticle.url);
-          const image = $('<img>');
-          image.attr('src', currentArticle.multimedia[0].url);
-          const headline = $('<h5>');
+          const image = $('<img class="article-image">');
+          image.attr('src', currentArticle.multimedia[1].url);
+          const headline = $('<h5 class="card-title">');
           headline.text(currentArticle.title);
           const abstract = $('<p>');
           if (currentArticle.abstract === undefined) {
@@ -143,33 +174,44 @@ $('document').ready(function() {
           } else {
             abstract.text(currentArticle.abstract);
           }
-          linkElement.append(image, headline, abstract);
+          // linkElement.append(image, headline, abstract);
+          linkElement.append(headline);
           newArticle.append(linkElement);
-          $('#article-dump').append(newArticle);
+          newArticleContent.append(image, abstract);
+          newArticle.append(newArticleContent);
+          categoryDiv.append(newArticle);
+          $('#article-dump').append(categoryDiv);
+          // bodyNewCategory.append(newArticle);
         }
       })
         .fail(function(err) {
           throw err;
         });
     }
-
+    // store data to local storage when the modal-close button is pressed
+    // refresh articles on page
+    $('.modal-close').click(function(event) {
+      event.preventDefault();
+      // capture user inputs and store them to variables
+      zipCode = $('#zip-code-input').val().trim();
+      userTopicArray = $('input:checked').map(function() {
+        return $(this).attr('data-section-value');
+      });
+      // console log to confirm we're capturing them
+      console.log(zipCode);
+      userTopicArray = userTopicArray.get();
+      console.log(userTopicArray);
+      // clear LocalStorage
+      localStorage.clear();
+      // store all content to LocalStorage
+      localStorage.setItem('zip', zipCode);
+      localStorage.setItem('userTopics', userTopicArray);
+      // re-display news articles with updated topics
+      $('#article-dump').empty();
+      addToUserNewsList();
+    });
+    // $('.collapsible').collapsible();
     // console.log(url);
   }
-  addToUserNewsSettings();
+  addToUserNewsList();
 });
-
-
-
-
-
-
-const photoArray = ["assets/images/ivana-cajina-316246-unsplash.jpg", "assets/images/elena-prokofyeva-17909-unsplash.jpg", "assets/images/david-marcu-114194-unsplash.jpg", "assets/images/julia-caesar-15080-unsplash.jpg",
-"assets/images/andrey-grinkevich-358756-unsplash.jpg","assets/images/aron-reacher-549695-unsplash.jpg", "assets/images/ashley-rowe-5658-unsplash.jpg", "assets/images/dan-aragon-387257-unsplash.jpg",
-"assets/images/hugues-de-buyer-mimeure-335733-unsplash.jpg", "assets/images/irene-davila-45779-unsplash.jpg", "assets/images/marko-blazevic-423709-unsplash.jpg", "assets/images/testimage.jpg"]
-
-function randomPhoto (){
-	let index = Math.floor(Math.random() * photoArray.length)
-	$(".headerimage").attr("src", photoArray[index])
-}
-
-randomPhoto()
