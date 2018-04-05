@@ -9,9 +9,18 @@ function randomPhoto () {
 
 randomPhoto();
 
-$('document').ready(function() {
-  // wunderground API
-  let zipCode = 55102;
+function setWeather() {
+  if  (localStorage.getItem('zip') === null) {
+    zipCode = "55120";
+    localStorage.setItem('zip', zipCode);
+    weatherMaker();
+  }
+  else (localStorage.getItem('zip') !== null);  {
+    zipCode = localStorage.getItem('zip');
+    weatherMaker();
+  }
+}
+function weatherMaker(){
   const weatherKey = '97be962b96e69fba';
   const weatherUrl = `http://api.wunderground.com/api/${weatherKey}/conditions/q/${zipCode}.json`;
   $.ajax({
@@ -34,9 +43,17 @@ $('document').ready(function() {
     bigTemp.addClass('currentTempBig');
     const windSentence = $('<p>').text(`Wind: ${wind}`);
     const precipSentence = $('<p>').text(`Precipitation: ${precipitation} in. expected today`);
+    $("#weatherIcon").empty();
     $('#weatherIcon').append(weatherIcon, bigTemp, conditionSentence, windSentence, precipSentence);
     $('#weatherURL').attr('href', weatherURL);
   });
+}
+
+$('document').ready(function() {
+  // wunderground API
+  // let zipCode = 55102;
+  setWeather();
+
   // quote API
   const QuoteUrl = 'https://favqs.com/api/qotd';
   $.ajax({
@@ -196,8 +213,10 @@ $('document').ready(function() {
       // store all content to LocalStorage
       localStorage.setItem('zip', zipCode);
       localStorage.setItem('userTopics', userTopicArray);
-      // re-display news articles with updated topics
+      
       $('#article-dump').empty();
+      // $("#weatherIcon").empty();
+      weatherMaker()
       addToUserNewsList();
     });
     // $('.collapsible').collapsible();

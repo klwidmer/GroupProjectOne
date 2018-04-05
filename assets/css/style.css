@@ -103,6 +103,11 @@ p{
  -webkit-padding-start: 2%;
 }
 
-p {
-  color: black;
+.card-title {
+  padding: 0;
+  padding-top: 15px;
+  /* padding-bottom: 15px; */
+}
+.article-image {
+  margin-right: 10px;
 }
