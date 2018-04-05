@@ -102,3 +102,12 @@ p{
 #topic-buttons{
  -webkit-padding-start: 2%;
 }
+
+#myCarousel {
+  height: 40%;
+}
+
+#top-stories {
+  padding-top: 20%;
+  /* margin-top: 30% */
+}
