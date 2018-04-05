@@ -102,3 +102,7 @@ p{
 #topic-buttons{
  -webkit-padding-start: 2%;
 }
+
+p {
+  color: black;
+}

@@ -1,13 +1,13 @@
-const photoArray = ["assets/images/ivana-cajina-316246-unsplash.jpg", "assets/images/elena-prokofyeva-17909-unsplash.jpg", "assets/images/david-marcu-114194-unsplash.jpg", "assets/images/julia-caesar-15080-unsplash.jpg",
-"assets/images/andrey-grinkevich-358756-unsplash.jpg","assets/images/aron-reacher-549695-unsplash.jpg", "assets/images/ashley-rowe-5658-unsplash.jpg", "assets/images/dan-aragon-387257-unsplash.jpg",
-"assets/images/hugues-de-buyer-mimeure-335733-unsplash.jpg", "assets/images/irene-davila-45779-unsplash.jpg", "assets/images/marko-blazevic-423709-unsplash.jpg", "assets/images/testimage.jpg"]
+const photoArray = ['assets/images/ivana-cajina-316246-unsplash.jpg', 'assets/images/elena-prokofyeva-17909-unsplash.jpg', 'assets/images/david-marcu-114194-unsplash.jpg', 'assets/images/julia-caesar-15080-unsplash.jpg',
+  'assets/images/andrey-grinkevich-358756-unsplash.jpg', 'assets/images/aron-reacher-549695-unsplash.jpg', 'assets/images/ashley-rowe-5658-unsplash.jpg', 'assets/images/dan-aragon-387257-unsplash.jpg',
+  'assets/images/hugues-de-buyer-mimeure-335733-unsplash.jpg', 'assets/images/irene-davila-45779-unsplash.jpg', 'assets/images/marko-blazevic-423709-unsplash.jpg', 'assets/images/testimage.jpg'];
 
-function randomPhoto (){
-	let index = Math.floor(Math.random() * photoArray.length)
-	$(".headerimage").attr("src", photoArray[index])
+function randomPhoto () {
+  const index = Math.floor(Math.random() * photoArray.length);
+  $('.headerimage').attr('src', photoArray[index]);
 }
 
-randomPhoto()
+randomPhoto();
 
 $('document').ready(function() {
   // wunderground API
@@ -63,7 +63,6 @@ $('document').ready(function() {
       textTopicChoice.text(section[k]);
       labelTopicChoice.append(textTopicChoice);
       $('#topic-buttons').append(pTopicChoice);
-
     }
   }
   let userTopicArray = [];
@@ -98,34 +97,22 @@ $('document').ready(function() {
     method: 'GET',
   }).done(function(result) {
     console.log(result);
-    for (let m = 0; m < 3; m++) {
+    for (let m = 2; m < 5; m++) {
       const topStory = result.results[m];
       // console.log(topStory);
       // pull 3 top stories from nytime to put in carousel
-      if (m === 0) {
-        const firstHeadline = $('<div class="item active">');
-        const firstHeadlineImage = $('<img>').attr('src', topStory.multimedia[1].url);
-        firstHeadlineImage.attr('style', 'width: auto;');
-        const firstHeadlineCaption = $('<div class="carousel-caption">');
-        const linkHeadline1 = $('<a>').attr('href', topStory.url);
-        const firstHeadlineTitle = $('<h3>').text(topStory.title);
-        const firstHeadlineText = $('<p>').text(topStory.abstract);
-        linkHeadline1.append(firstHeadlineTitle);
-        firstHeadlineCaption.append(linkHeadline1, firstHeadlineText);
-        firstHeadline.append(firstHeadlineImage, firstHeadlineCaption);
-        $('#top-stories').append(firstHeadline);
+      if (m === 2) {
+        $('#story-one-img').attr('src', topStory.multimedia[4].url);
+        $('#story-one-h3').text(topStory.title);
+        $('story-one-p').text(topStory.abstract);
+      } else if (m === 3) {
+        $('#story-two-img').attr('src', topStory.multimedia[4].url);
+        $('#story-two-h3').text(topStory.title);
+        $('story-two-p').text(topStory.abstract);
       } else {
-        const nextHeadline = $('<div class="item">');
-        const nextHeadlineImage = $('<img>').attr('src', topStory.multimedia[1].url);
-        nextHeadlineImage.attr('style', 'width: auto;');
-        const nextHeadlineCaption = $('<div class="carousel-caption">');
-        const linkHeadlineNext = $('<a>').attr('href', topStory.url);
-        const nextHeadlineTitle = $('<h3>').text(topStory.title);
-        const nextHeadlineText = $('<p>').text(topStory.abstract);
-        linkHeadlineNext.append(nextHeadlineTitle);
-        nextHeadlineCaption.append(linkHeadlineNext, nextHeadlineText);
-        nextHeadline.append(nextHeadlineImage, nextHeadlineCaption);
-        $('#top-stories').append(nextHeadline);
+        $('#story-three-img').attr('src', topStory.multimedia[4].url);
+        $('#story-three-h3').text(topStory.title);
+        $('story-three-p').text(topStory.abstract);
       }
     }
   });
