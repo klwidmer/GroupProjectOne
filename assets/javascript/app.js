@@ -28,7 +28,7 @@ function weatherMaker(){
     dataType: 'jsonp',
     method: 'GET',
   }).then(function(response) {
-    console.log(response);
+    // console.log(response);
     const weatherIcon = $('<img>').attr('src', response.current_observation.icon_url);
     weatherIcon.addClass('weather-image');
     const location = response.current_observation.display_location.full;
@@ -71,7 +71,7 @@ function displayQuote(){
     url: QuoteUrl,
     method: 'GET',
   }).then(function(result) {
-    console.log(result.quote.body);
+    // console.log(result.quote.body);
     $('#quote').text(result.quote.body);
   });
 }
@@ -106,12 +106,12 @@ function addToUserNewsList() {
       url: newsUrl,
       method: 'GET',
     }).done(function(result) {
-      console.log(result);
+      // console.log(result);
       // Creates all the page elements for articles
       
       for (let i = 0; i < 3; i++) {
         const currentArticle = result.results[i];
-        console.log(currentArticle);
+        // console.log(currentArticle);
         const newArticleCard = $('<div class="article-div card blue-grey lighten-5">');
         const newArticleCardContent = $('<div class="card-content">');
         const linkElement = $('<a>');
@@ -161,8 +161,9 @@ function addToUserNewsList() {
     localStorage.setItem('userTopics', userTopicArray);
     $('#article-dump').empty();
     // $("#weatherIcon").empty();
-    weatherMaker()
+    weatherMaker();
     addToUserNewsList();
+
   });
 
 }
@@ -180,6 +181,9 @@ function modalFunctionality(){
     displayModalTopicChoices();
   });
 }
+  
+ 
+
 function loadCarosel(){
   let topStoriesUrl = 'https://api.nytimes.com/svc/topstories/v2/home.json?';
   topStoriesUrl += $.param({
@@ -189,7 +193,7 @@ function loadCarosel(){
     url: topStoriesUrl,
     method: 'GET',
   }).done(function(result) {
-    console.log(result);
+    // console.log(result);
     for (let m = 2; m < 5; m++) {
       const topStory = result.results[m];
       // console.log(topStory);
@@ -212,16 +216,32 @@ function loadCarosel(){
   });
 
 }
+function setNews() {
+  console.log("IF");
+  if (localStorage.getItem('userTopics') === null) {
+    userTopicString = "food";
+    localStorage.setItem('userTopics', userTopicString);
+    addToUserNewsList();
+  }
+  else if (localStorage.getItem('userTopics') !== null) {
+    console.log("else");
+    userTopicString = localStorage.getItem('userTopics');
+    addToUserNewsList();
+    }
+  }
+  
 
 $('document').ready(function() {
-  modalFunctionality()
-  randomPhoto();
-  setWeather();
-  displayQuote();
-  displayModalTopicChoices();
-  loadCarosel()
-  addToUserNewsList();
-});
+    setNews();
+    modalFunctionality();
+    randomPhoto();
+    setWeather();
+    displayQuote();
+    displayModalTopicChoices();
+    loadCarosel()
+    // addToUserNewsList();
+  });
+
 
 $("#article-dump").on("click", "h4", function(){
   // $(".collapsible-div").hide()
