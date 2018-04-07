@@ -22,7 +22,7 @@ function setWeather() {
 }
 function weatherMaker(){
   const weatherKey = '97be962b96e69fba';
-  const weatherUrl = `http://api.wunderground.com/api/${weatherKey}/conditions/q/${zipCode}.json`;
+  const weatherUrl = `https://api.wunderground.com/api/${weatherKey}/conditions/q/${zipCode}.json`;
   $.ajax({
     url: weatherUrl,
     dataType: 'jsonp',
