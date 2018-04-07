@@ -103,11 +103,40 @@ p{
  -webkit-padding-start: 2%;
 }
 
-#myCarousel {
-  height: 40%;
+.card-title {
+  padding: 0;
+  padding-top: 15px;
 }
 
-#top-stories {
-  padding-top: 20%;
-  /* margin-top: 30% */
+.article-image {
+  margin-right: 10px;
 }
+
+#myCarousel {
+  height: 30%;
+} 
+
+#top-stories {
+  padding-top: 1px;
+  margin-bottom: 1px;
+  margin-top: 1px;
+}
+
+#story-one-h3,
+#story-two-h3,
+#story-three-h3{
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+@media screen and (max-width:768px){
+  #story-one-h3,
+  #story-two-h3,
+  #story-three-h3{
+    background-color: rgba(0, 0, 0, 0.4);
+    font-size: 13px;
+    padding: 3px;
+   }
+  }
+
+ 
+
