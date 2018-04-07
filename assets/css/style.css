@@ -3,6 +3,12 @@
 }
 nav {
   background-color: rgb(46, 45, 45);
+  height: 100px;
+}
+
+ul{
+  position: absolute;
+  right: 0;
 }
 header {
   position: relative;
@@ -23,9 +29,9 @@ header {
   
 }
 body {
-  background-color: white
+  background-color: white;
 }
-h5 {
+#quote {
   color: white;
   font-style: italic;
   margin: auto;
@@ -50,10 +56,7 @@ h5 {
   color: #00bcd4;
   webkit-transition: color .3s ease;
 }
-.card-title{
-  font-weight: bold;
-  color: rgb(46, 45, 45);
-}
+
 .btn {
   background-color: #00bcd4;
 }
@@ -66,9 +69,7 @@ input {
   margin-right: 37%;
 }
 #weatherIcon {
- padding-left: 15px;
- padding-right: 15px;
- padding-bottom: 15px;
+ padding: 15px;
 }
 #weatherIcon p {
   font-size: 12px;
@@ -103,13 +104,71 @@ p{
  -webkit-padding-start: 2%;
 }
 
-.card-title {
-  padding: 0;
-  padding-top: 15px;
+.card .card-title {
+  padding: 24px 24px 0px 24px;
+  color: rgb(46, 45, 45);
+  font-weight: 400; 
 }
 
 .article-image {
-  margin-right: 10px;
+  margin-right: 24px;
+  float: left;
+  margin-bottom: 5px;
+}
+
+.category-div h4 {
+  background-color: #00bcd4;
+  color: white;
+  padding: 15px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
+
+.card .card-content {
+  margin-bottom: 15px;
+  padding-top: 5px;
+  overflow: scroll;
+}
+
+.card .card-content p {
+  margin-bottom: 20px;
+  display: block;
+  font-size: 17px;
+}
+
+
+@media screen and (max-width: 575px){
+  nav {
+    background-color: rgb(46, 45, 45);
+    height: 130px;
+  }
+
+.brand-logo{
+  position: absolute;
+  top: 10px;
+}
+  
+nav ul{
+  position: absolute;
+  left: 5px;
+  bottom: 25px;
+  margin-left: 0;
+  padding-left: 0;
+  margin-top: 10px;
+}
+
+nav ul a.btn{
+  /* padding: 0; */
+  margin: 0;
+}
+  header {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+    
+  }
+
 }
 
 #myCarousel {
