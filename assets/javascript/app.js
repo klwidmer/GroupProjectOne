@@ -71,8 +71,9 @@ function displayQuote(){
     url: QuoteUrl,
     method: 'GET',
   }).then(function(result) {
-    // console.log(result.quote.body);
+    console.log(result.quote.author);
     $('#quote').text(result.quote.body);
+    $('#author').text(result.quote.author);
   });
 }
 function addToUserNewsList() {
