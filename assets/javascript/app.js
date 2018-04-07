@@ -212,8 +212,24 @@ function loadCarosel(){
   });
 
 }
+function setNews() {
+  console.log("IF");
+  if (localStorage.getItem('userTopics') === null) {
+    userTopicString = "food";
+    localStorage.setItem('userTopics', userTopicString);
+    addToUserNewsList();
+  }
+  else (localStorage.getItem('userTopics') !== null); {
+    console.log("else");
+    userTopicString = localStorage.getItem('userTopics');
+    addToUserNewsList();
+    }
+  }
+  
 
 $('document').ready(function() {
+ 
+  setNews();
   modalFunctionality()
   randomPhoto();
   setWeather();
