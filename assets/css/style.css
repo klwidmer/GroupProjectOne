@@ -29,7 +29,7 @@ header {
   
 }
 body {
-  background-color: white
+  background-color: white;
 }
 #quote {
   color: white;
@@ -107,9 +107,9 @@ p{
 .card .card-title {
   padding: 24px 24px 0px 24px;
   color: rgb(46, 45, 45);
-  font-weight: 400;
-  
+  font-weight: 400; 
 }
+
 .article-image {
   margin-right: 24px;
   float: left;
@@ -170,3 +170,32 @@ nav ul a.btn{
   }
 
 }
+
+#myCarousel {
+  height: 30%;
+} 
+
+#top-stories {
+  padding-top: 1px;
+  margin-bottom: 1px;
+  margin-top: 1px;
+}
+
+#story-one-h3,
+#story-two-h3,
+#story-three-h3{
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+@media screen and (max-width:768px){
+  #story-one-h3,
+  #story-two-h3,
+  #story-three-h3{
+    background-color: rgba(0, 0, 0, 0.4);
+    font-size: 13px;
+    padding: 3px;
+   }
+  }
+
+ 
+
