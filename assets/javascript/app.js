@@ -138,26 +138,18 @@ $('document').ready(function() {
     for (let j = 0; j < userTopicArray.length; j++) {
       const sectionValue = userTopicArray[j];
       const sectionTitleValue = userTopicTitles[j];
-      // $(this).attr('data-section-value');
-      // console.log("SectionValue: " + sectionValue);
-      // // For collapsible feature... not currently working with dynamically generated classes
-      // const newCategory = $('<li>');
-      // const headerNewCategory = $('<div class="collapsible-header">');
-      // headerNewCategory.text(sectionValue);
-      // const bodyNewCategory = $('<div class="collapsible-body">');
-      // bodyNewCategory.attr('id', sectionValue);
-      // headerNewCategory.append(bodyNewCategory);
-      // newCategory.append(headerNewCategory);
-      // $('#article-dump').append(newCategory);
       // Create headers and news category divs
       const categoryDiv = $('<div class="category-div">');
-      const newsCategoryHeading = $('<h4>');
-      newsCategoryHeading.text(sectionTitleValue);
-      categoryDiv.append(newsCategoryHeading);
+      const newsCategoryHeading = $('<h4>').text(sectionTitleValue);
+      const collapsibleCategoryDiv = $(`<div id=${sectionTitleValue} class="collapsible-div">`)
+      categoryDiv.append(newsCategoryHeading, collapsibleCategoryDiv);
+
       let newsUrl = `https://api.nytimes.com/svc/topstories/v2/${sectionValue}.json?`;
       newsUrl += $.param({
         'api-key': '11762ff764a447f59a19f692781b25d4',
       });
+
+      
       $.ajax({
         url: newsUrl,
         method: 'GET',
@@ -167,14 +159,13 @@ $('document').ready(function() {
         for (let i = 0; i < 3; i++) {
           const currentArticle = result.results[i];
           console.log(currentArticle);
-          const newArticle = $('<div class="article-div card blue-grey lighten-5">');
-          const newArticleContent = $('<div class="card-content">');
+          const newArticleCard = $('<div class="article-div card blue-grey lighten-5">');
+          const newArticleCardContent = $('<div class="card-content">');
           const linkElement = $('<a>');
           linkElement.attr('href', currentArticle.url);
           const image = $('<img class="article-image">');
           image.attr('src', currentArticle.multimedia[1].url);
-          const headline = $('<h5 class="card-title">');
-          headline.text(currentArticle.title);
+          const headline = $('<h5 class="card-title">').text(currentArticle.title);
           const abstract = $('<p>');
           if (currentArticle.abstract === undefined) {
             abstract.text('Unknown');
@@ -183,18 +174,21 @@ $('document').ready(function() {
           }
           // linkElement.append(image, headline, abstract);
           linkElement.append(headline);
-          newArticle.append(linkElement);
-          newArticleContent.append(image, abstract);
-          newArticle.append(newArticleContent);
-          categoryDiv.append(newArticle);
+          //new 
+          newArticleCardContent.append(image, abstract);
+          newArticleCard.append(linkElement, newArticleCardContent);
+
+          collapsibleCategoryDiv.append(newArticleCard)
+          categoryDiv.append(collapsibleCategoryDiv);
           $('#article-dump').append(categoryDiv);
-          // bodyNewCategory.append(newArticle);
+          collapsibleCategoryDiv.hide()
         }
       })
         .fail(function(err) {
           throw err;
         });
     }
+
     // store data to local storage when the modal-close button is pressed
     // refresh articles on page
     $('.modal-close').click(function(event) {
@@ -213,7 +207,6 @@ $('document').ready(function() {
       // store all content to LocalStorage
       localStorage.setItem('zip', zipCode);
       localStorage.setItem('userTopics', userTopicArray);
-      
       $('#article-dump').empty();
       // $("#weatherIcon").empty();
       weatherMaker()
@@ -224,3 +217,21 @@ $('document').ready(function() {
   }
   addToUserNewsList();
 });
+
+$("#article-dump").on("click", "h4", function(){
+  // $(".collapsible-div").hide()
+  var articleSectionId = $(this).text()
+  console.log(articleSectionId)
+  $("#" + articleSectionId).toggle()
+
+})
+
+$("#article-dump").on("mouseenter", "h4", function(){
+  // $(".collapsible-div").hide()
+  $(this).animate({opacity: .5}, 0);
+
+})
+
+$("#article-dump").on("mouseleave", "h4", function(){
+  $(this).animate({opacity: 1.0}, 0);
+})
