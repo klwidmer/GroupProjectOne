@@ -1,13 +1,13 @@
 const photoArray = ['assets/images/ivana-cajina-316246-unsplash.jpg', 'assets/images/elena-prokofyeva-17909-unsplash.jpg', 'assets/images/david-marcu-114194-unsplash.jpg', 'assets/images/julia-caesar-15080-unsplash.jpg',
   'assets/images/andrey-grinkevich-358756-unsplash.jpg', 'assets/images/aron-reacher-549695-unsplash.jpg', 'assets/images/ashley-rowe-5658-unsplash.jpg', 'assets/images/dan-aragon-387257-unsplash.jpg',
   'assets/images/hugues-de-buyer-mimeure-335733-unsplash.jpg', 'assets/images/irene-davila-45779-unsplash.jpg', 'assets/images/marko-blazevic-423709-unsplash.jpg', 'assets/images/testimage.jpg'];
-
+  const section = ['world', 'technology', 'sports', 'travel', 'food', 'automobiles', 'arts'];
+  var userTopicArray = [];
+  var userTopicTitles = [];
 function randomPhoto () {
   const index = Math.floor(Math.random() * photoArray.length);
   $('.headerimage').attr('src', photoArray[index]);
 }
-
-randomPhoto();
 
 function setWeather() {
   if  (localStorage.getItem('zip') === null) {
@@ -48,13 +48,24 @@ function weatherMaker(){
     $('#weatherURL').attr('href', weatherURL);
   });
 }
+function displayModalTopicChoices() {
+  $('#topic-buttons').empty();
+  for (let k = 0; k < section.length; k++) {
+    const pTopicChoice = $('<div>');
+    const labelTopicChoice = $('<label>');
+    const inputTopicChoice = $('<input type="checkbox" />');
+    const textTopicChoice = $('<span>');
+    inputTopicChoice.attr('data-section-value', section[k]);
+    inputTopicChoice.attr('id', 'topicInput');
+    pTopicChoice.append(labelTopicChoice);
+    labelTopicChoice.append(inputTopicChoice);
+    textTopicChoice.text(section[k]);
+    labelTopicChoice.append(textTopicChoice);
+    $('#topic-buttons').append(pTopicChoice);
+  }
+}
 
-$('document').ready(function() {
-  // wunderground API
-  // let zipCode = 55102;
-  setWeather();
-
-  // quote API
+function displayQuote(){
   const QuoteUrl = 'https://favqs.com/api/qotd';
   $.ajax({
     url: QuoteUrl,
@@ -63,35 +74,9 @@ $('document').ready(function() {
     console.log(result.quote.body);
     $('#quote').text(result.quote.body);
   });
-
-  const section = ['world', 'technology', 'sports', 'travel', 'food', 'automobiles', 'arts'];
-
-  function displayModalTopicChoices() {
-    $('#topic-buttons').empty();
-    for (let k = 0; k < section.length; k++) {
-      const pTopicChoice = $('<div>');
-      const labelTopicChoice = $('<label>');
-      const inputTopicChoice = $('<input type="checkbox" />');
-      const textTopicChoice = $('<span>');
-      inputTopicChoice.attr('data-section-value', section[k]);
-      inputTopicChoice.attr('id', 'topicInput');
-      pTopicChoice.append(labelTopicChoice);
-      labelTopicChoice.append(inputTopicChoice);
-      textTopicChoice.text(section[k]);
-      labelTopicChoice.append(textTopicChoice);
-      $('#topic-buttons').append(pTopicChoice);
-    }
-  }
-  let userTopicArray = [];
-  // select and initialize modal
-  const elemModal = document.querySelector('.modal');
-  const instanceModal = M.Modal.init(elemModal);
-  // open modal using the customize button
-  $('.modal-trigger').click(function(event) {
-    event.preventDefault();
-    instanceModal.open();
-    displayModalTopicChoices();
-  });
+}
+function addToUserNewsList() {
+  // localStorage
   const userTopicString = localStorage.getItem('userTopics');
   userTopicArray = userTopicString.split(',');
   const userTopicTitles = [];
@@ -101,10 +86,101 @@ $('document').ready(function() {
   console.log(userTopicString);
   console.log(userTopicArray);
   console.log(userTopicTitles);
-  // initialize collapsible
-  // const elemCollapse = document.querySelector('.collapsible');
-  // const instanceCollapse = M.Collapsible.init(elemCollapse);
-  // $('.collapsible').collapsible();
+  $('#article-dump').empty()
+  
+  for (let j = 0; j < userTopicArray.length; j++) {
+    const sectionValue = userTopicArray[j];
+    const sectionTitleValue = userTopicTitles[j];
+    // Create headers and news category divs
+    const categoryDiv = $('<div class="category-div">');
+    const newsCategoryHeading = $('<h4>').text(sectionTitleValue);
+    const collapsibleCategoryDiv = $(`<div id=${sectionTitleValue} class="collapsible-div">`)
+    categoryDiv.append(newsCategoryHeading, collapsibleCategoryDiv);
+
+    let newsUrl = `https://api.nytimes.com/svc/topstories/v2/${sectionValue}.json?`;
+    newsUrl += $.param({
+      'api-key': '11762ff764a447f59a19f692781b25d4',
+    });
+    
+    $.ajax({
+      url: newsUrl,
+      method: 'GET',
+    }).done(function(result) {
+      console.log(result);
+      // Creates all the page elements for articles
+      
+      for (let i = 0; i < 3; i++) {
+        const currentArticle = result.results[i];
+        console.log(currentArticle);
+        const newArticleCard = $('<div class="article-div card blue-grey lighten-5">');
+        const newArticleCardContent = $('<div class="card-content">');
+        const linkElement = $('<a>');
+        linkElement.attr('href', currentArticle.url);
+        const image = $('<img class="article-image">');
+        image.attr('src', currentArticle.multimedia[1].url);
+        const headline = $('<h5 class="card-title">').text(currentArticle.title);
+        const abstract = $('<p>');
+        if (currentArticle.abstract === undefined) {
+          abstract.text('Unknown');
+        } else {
+          abstract.text(currentArticle.abstract);
+        }
+        // linkElement.append(image, headline, abstract);
+        linkElement.append(headline);
+        //new 
+        newArticleCardContent.append(image, abstract);
+        newArticleCard.append(linkElement, newArticleCardContent);
+
+        collapsibleCategoryDiv.append(newArticleCard)
+        categoryDiv.append(collapsibleCategoryDiv);
+        $('#article-dump').append(categoryDiv);
+        collapsibleCategoryDiv.hide()
+      }
+    })
+      .fail(function(err) {
+        throw err;
+      });
+  }
+
+
+  $('.modal-close').click(function(event) {
+    event.preventDefault();
+    // capture user inputs and store them to variables
+    zipCode = $('#zip-code-input').val().trim();
+    userTopicArray = $('input:checked').map(function() {
+      return $(this).attr('data-section-value');
+    });
+    // console log to confirm we're capturing them
+    console.log(zipCode);
+    userTopicArray = userTopicArray.get();
+    console.log(userTopicArray);
+    // clear LocalStorage
+    localStorage.clear();
+    // store all content to LocalStorage
+    localStorage.setItem('zip', zipCode);
+    localStorage.setItem('userTopics', userTopicArray);
+    $('#article-dump').empty();
+    // $("#weatherIcon").empty();
+    weatherMaker()
+    addToUserNewsList();
+  });
+
+}
+
+function modalFunctionality(){
+  
+  userTopicArray = [];
+  // select and initialize modal
+  const elemModal = document.querySelector('.modal');
+  const instanceModal = M.Modal.init(elemModal);
+  
+  $('.modal-trigger').click(function(event) {
+    event.preventDefault();
+    instanceModal.open();
+    displayModalTopicChoices();
+  });
+}
+function loadCarosel(){
   let topStoriesUrl = 'https://api.nytimes.com/svc/topstories/v2/home.json?';
   topStoriesUrl += $.param({
     'api-key': '11762ff764a447f59a19f692781b25d4',
@@ -132,89 +208,18 @@ $('document').ready(function() {
         $('story-three-p').text(topStory.abstract);
       }
     }
+
   });
-  // function to populate list of news articles on page
-  function addToUserNewsList() {
-    for (let j = 0; j < userTopicArray.length; j++) {
-      const sectionValue = userTopicArray[j];
-      const sectionTitleValue = userTopicTitles[j];
-      // Create headers and news category divs
-      const categoryDiv = $('<div class="category-div">');
-      const newsCategoryHeading = $('<h4>').text(sectionTitleValue);
-      const collapsibleCategoryDiv = $(`<div id=${sectionTitleValue} class="collapsible-div">`)
-      categoryDiv.append(newsCategoryHeading, collapsibleCategoryDiv);
 
-      let newsUrl = `https://api.nytimes.com/svc/topstories/v2/${sectionValue}.json?`;
-      newsUrl += $.param({
-        'api-key': '11762ff764a447f59a19f692781b25d4',
-      });
+}
 
-      
-      $.ajax({
-        url: newsUrl,
-        method: 'GET',
-      }).done(function(result) {
-        console.log(result);
-        // Creates all the page elements for articles
-        for (let i = 0; i < 3; i++) {
-          const currentArticle = result.results[i];
-          console.log(currentArticle);
-          const newArticleCard = $('<div class="article-div card blue-grey lighten-5">');
-          const newArticleCardContent = $('<div class="card-content">');
-          const linkElement = $('<a>');
-          linkElement.attr('href', currentArticle.url);
-          const image = $('<img class="article-image">');
-          image.attr('src', currentArticle.multimedia[1].url);
-          const headline = $('<h5 class="card-title">').text(currentArticle.title);
-          const abstract = $('<p>');
-          if (currentArticle.abstract === undefined) {
-            abstract.text('Unknown');
-          } else {
-            abstract.text(currentArticle.abstract);
-          }
-          // linkElement.append(image, headline, abstract);
-          linkElement.append(headline);
-          //new 
-          newArticleCardContent.append(image, abstract);
-          newArticleCard.append(linkElement, newArticleCardContent);
-
-          collapsibleCategoryDiv.append(newArticleCard)
-          categoryDiv.append(collapsibleCategoryDiv);
-          $('#article-dump').append(categoryDiv);
-          collapsibleCategoryDiv.hide()
-        }
-      })
-        .fail(function(err) {
-          throw err;
-        });
-    }
-
-    // store data to local storage when the modal-close button is pressed
-    // refresh articles on page
-    $('.modal-close').click(function(event) {
-      event.preventDefault();
-      // capture user inputs and store them to variables
-      zipCode = $('#zip-code-input').val().trim();
-      userTopicArray = $('input:checked').map(function() {
-        return $(this).attr('data-section-value');
-      });
-      // console log to confirm we're capturing them
-      console.log(zipCode);
-      userTopicArray = userTopicArray.get();
-      console.log(userTopicArray);
-      // clear LocalStorage
-      localStorage.clear();
-      // store all content to LocalStorage
-      localStorage.setItem('zip', zipCode);
-      localStorage.setItem('userTopics', userTopicArray);
-      $('#article-dump').empty();
-      // $("#weatherIcon").empty();
-      weatherMaker()
-      addToUserNewsList();
-    });
-    // $('.collapsible').collapsible();
-    // console.log(url);
-  }
+$('document').ready(function() {
+  modalFunctionality()
+  randomPhoto();
+  setWeather();
+  displayQuote();
+  displayModalTopicChoices();
+  loadCarosel()
   addToUserNewsList();
 });
 
