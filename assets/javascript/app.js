@@ -76,6 +76,7 @@ function displayQuote(){
   });
 }
 function addToUserNewsList() {
+  // localStorage
   const userTopicString = localStorage.getItem('userTopics');
   userTopicArray = userTopicString.split(',');
   const userTopicTitles = [];
@@ -85,6 +86,7 @@ function addToUserNewsList() {
   console.log(userTopicString);
   console.log(userTopicArray);
   console.log(userTopicTitles);
+  $('#article-dump').empty()
   
   for (let j = 0; j < userTopicArray.length; j++) {
     const sectionValue = userTopicArray[j];
@@ -106,6 +108,7 @@ function addToUserNewsList() {
     }).done(function(result) {
       console.log(result);
       // Creates all the page elements for articles
+      
       for (let i = 0; i < 3; i++) {
         const currentArticle = result.results[i];
         console.log(currentArticle);
