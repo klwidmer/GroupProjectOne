@@ -193,21 +193,24 @@ function loadCarosel(){
     url: topStoriesUrl,
     method: 'GET',
   }).done(function(result) {
-    // console.log(result);
+    console.log(result);
     for (let m = 2; m < 5; m++) {
       const topStory = result.results[m];
       // console.log(topStory);
       // pull 3 top stories from nytime to put in carousel
       if (m === 2) {
         $('#story-one-img').attr('src', topStory.multimedia[4].url);
+        $('#story-one-link').attr('href', topStory.short_url)
         $('#story-one-h3').text(topStory.title);
         $('story-one-p').text(topStory.abstract);
       } else if (m === 3) {
         $('#story-two-img').attr('src', topStory.multimedia[4].url);
+        $('#story-two-link').attr('href', topStory.short_url)
         $('#story-two-h3').text(topStory.title);
         $('story-two-p').text(topStory.abstract);
       } else {
         $('#story-three-img').attr('src', topStory.multimedia[4].url);
+        $('#story-three-link').attr('href', topStory.short_url)
         $('#story-three-h3').text(topStory.title);
         $('story-three-p').text(topStory.abstract);
       }
