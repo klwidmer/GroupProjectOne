@@ -250,7 +250,7 @@ function setNews() {
     console.log("else");
     }
   }
-}
+// }
 
 
 $('document').ready(function() {
