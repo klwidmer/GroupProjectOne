@@ -10,7 +10,7 @@ function randomPhoto () {
 }
 
 function setWeather() {
-  if (localStorage.getItem('zip') == null) {
+  if (localStorage.getItem('zip') === null) {
     zipCode = "55120";
     localStorage.setItem('zip', zipCode);
     weatherMaker();
