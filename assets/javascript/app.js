@@ -12,7 +12,9 @@ function randomPhoto () {
   $('.headerimage').attr('src', photoArray[index]);
 }
 
+
 function weatherMaker() {
+
   const weatherKey = '97be962b96e69fba';
   const weatherUrl = `https://api.wunderground.com/api/${weatherKey}/conditions/q/${zipCode}.json`;
   $.ajax({
@@ -89,8 +91,9 @@ function displayQuote() {
     url: QuoteUrl,
     method: 'GET',
   }).then(function(result) {
-    // console.log(result.quote.body);
+    // console.log(result.quote.author);
     $('#quote').text(result.quote.body);
+    $('#author').text(result.quote.author);
   });
 }
 function addToUserNewsList() {
@@ -103,9 +106,10 @@ function addToUserNewsList() {
   }
   console.log(userTopicString);
   console.log(userTopicArray);
-  console.log(userTopicTitles);
-  $('#article-dump').empty();
 
+  // console.log(userTopicTitles);
+  $('#article-dump').empty();
+  
   for (let j = 0; j < userTopicArray.length; j++) {
     const sectionValue = userTopicArray[j];
     const sectionTitleValue = userTopicTitles[j];
@@ -159,7 +163,7 @@ function addToUserNewsList() {
         throw err;
       });
   }
-
+}
 
   $('.modal-close').click(function(event) {
     event.preventDefault();
@@ -169,7 +173,7 @@ function addToUserNewsList() {
       return $(this).attr('data-section-value');
     });
     // console log to confirm we're capturing them
-    console.log(zipCode);
+    // console.log(zipCode);
     userTopicArray = userTopicArray.get();
     console.log(userTopicArray);
     // clear LocalStorage
@@ -178,11 +182,13 @@ function addToUserNewsList() {
     localStorage.setItem('zip', zipCode);
     localStorage.setItem('userTopics', userTopicArray);
     $('#article-dump').empty();
-    // $("#weatherIcon").empty();
+    $("#weatherIcon").empty();
     weatherMaker();
     addToUserNewsList();
   });
-}
+
+//The following closing bracket was enclosing the modal close event handler and repeating the addToUserNewsList function.  Moved to line 146.
+// }
 
 function modalFunctionality() {
   userTopicArray = [];
@@ -207,21 +213,24 @@ function loadCarosel() {
     url: topStoriesUrl,
     method: 'GET',
   }).done(function(result) {
-    // console.log(result);
+    console.log(result);
     for (let m = 2; m < 5; m++) {
       const topStory = result.results[m];
       // console.log(topStory);
       // pull 3 top stories from nytime to put in carousel
       if (m === 2) {
         $('#story-one-img').attr('src', topStory.multimedia[4].url);
+        $('#story-one-link').attr('href', topStory.short_url)
         $('#story-one-h3').text(topStory.title);
         $('story-one-p').text(topStory.abstract);
       } else if (m === 3) {
         $('#story-two-img').attr('src', topStory.multimedia[4].url);
+        $('#story-two-link').attr('href', topStory.short_url)
         $('#story-two-h3').text(topStory.title);
         $('story-two-p').text(topStory.abstract);
       } else {
         $('#story-three-img').attr('src', topStory.multimedia[4].url);
+        $('#story-three-link').attr('href', topStory.short_url)
         $('#story-three-h3').text(topStory.title);
         $('story-three-p').text(topStory.abstract);
       }
@@ -229,15 +238,17 @@ function loadCarosel() {
   });
 }
 function setNews() {
-  console.log('IF');
   if (localStorage.getItem('userTopics') === null) {
-    userTopicString = 'world';
-    localStorage.setItem('userTopics', userTopicString);
-    addToUserNewsList();
-  } else if (localStorage.getItem('userTopics') !== null) {
-    console.log('else');
+      userTopicString = "world";
+      localStorage.setItem('userTopics', userTopicString);
+      // addToUserNewsList();
+    console.log("IF");
+  }
+  if (localStorage.getItem('userTopics') !== null); {
     userTopicString = localStorage.getItem('userTopics');
     addToUserNewsList();
+    console.log("else");
+    }
   }
 }
 

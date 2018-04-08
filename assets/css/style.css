@@ -28,8 +28,11 @@ header {
   background-color: rgba(0, 0, 0, 0.4);
   
 }
-body {
-  background-color: white;
+.modal{
+  background-color: #212121;
+}
+.modal .modal-footer{
+  height: auto;
 }
 #quote {
   color: white;
@@ -40,7 +43,7 @@ body {
   text-align: center;
 }
 .iconholder {
-  font-size: 36px;
+  font-size: 45px;
   display: inline-block;
   text-align: center;
   color: #00bcd4;
@@ -136,6 +139,14 @@ p{
   margin-bottom: 20px;
   display: block;
   font-size: 17px;
+}
+
+.top-stories-title {
+  padding-bottom: 5%;
+}
+
+#story-one-h3, #story-two-h3, #story-three-h3 {
+  color: white;
 }
 
 
