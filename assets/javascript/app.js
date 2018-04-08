@@ -10,16 +10,18 @@ function randomPhoto () {
 }
 
 function setWeather() {
-  if  (localStorage.getItem('zip') === null) {
+  if (localStorage.getItem('zip') == null) {
     zipCode = "55120";
     localStorage.setItem('zip', zipCode);
     weatherMaker();
   }
   else (localStorage.getItem('zip') !== null);  {
     zipCode = localStorage.getItem('zip');
+    console.log(zipCode);
     weatherMaker();
   }
 }
+
 function weatherMaker(){
   const weatherKey = '97be962b96e69fba';
   const weatherUrl = `http://api.wunderground.com/api/${weatherKey}/conditions/q/${zipCode}.json`;
@@ -71,7 +73,7 @@ function displayQuote(){
     url: QuoteUrl,
     method: 'GET',
   }).then(function(result) {
-    console.log(result.quote.author);
+    // console.log(result.quote.author);
     $('#quote').text(result.quote.body);
     $('#author').text(result.quote.author);
   });
@@ -86,8 +88,8 @@ function addToUserNewsList() {
   }
   console.log(userTopicString);
   console.log(userTopicArray);
-  console.log(userTopicTitles);
-  $('#article-dump').empty()
+  // console.log(userTopicTitles);
+  $('#article-dump').empty();
   
   for (let j = 0; j < userTopicArray.length; j++) {
     const sectionValue = userTopicArray[j];
@@ -142,7 +144,7 @@ function addToUserNewsList() {
         throw err;
       });
   }
-
+}
 
   $('.modal-close').click(function(event) {
     event.preventDefault();
@@ -152,7 +154,7 @@ function addToUserNewsList() {
       return $(this).attr('data-section-value');
     });
     // console log to confirm we're capturing them
-    console.log(zipCode);
+    // console.log(zipCode);
     userTopicArray = userTopicArray.get();
     console.log(userTopicArray);
     // clear LocalStorage
@@ -161,13 +163,13 @@ function addToUserNewsList() {
     localStorage.setItem('zip', zipCode);
     localStorage.setItem('userTopics', userTopicArray);
     $('#article-dump').empty();
-    // $("#weatherIcon").empty();
+    $("#weatherIcon").empty();
     weatherMaker();
     addToUserNewsList();
 
   });
-
-}
+//The following closing bracket was enclosing the modal close event handler and repeating the addToUserNewsList function.  Moved to line 146.
+// }
 
 function modalFunctionality(){
   
@@ -218,16 +220,16 @@ function loadCarosel(){
 
 }
 function setNews() {
-  console.log("IF");
   if (localStorage.getItem('userTopics') === null) {
-    userTopicString = "food";
-    localStorage.setItem('userTopics', userTopicString);
-    addToUserNewsList();
+      userTopicString = "world";
+      localStorage.setItem('userTopics', userTopicString);
+      // addToUserNewsList();
+    console.log("IF");
   }
-  else if (localStorage.getItem('userTopics') !== null) {
-    console.log("else");
+  if (localStorage.getItem('userTopics') !== null); {
     userTopicString = localStorage.getItem('userTopics');
     addToUserNewsList();
+    console.log("else");
     }
   }
   
