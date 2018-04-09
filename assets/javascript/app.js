@@ -56,7 +56,7 @@ function setWeather() {
         { latLng: point },
         function (res, status) {
           console.log(res);
-          zipCode = res[0].address_components[7].short_name;
+          zipCode = res[5].address_components[0].long_name;
           localStorage.setItem('zip', zipCode);
           weatherMaker();
         },
@@ -214,21 +214,21 @@ function loadCarosel() {
     method: 'GET',
   }).done(function(result) {
     console.log(result);
-    for (let m = 2; m < 5; m++) {
+    for (let m = 3; m < 8; m++) {
       const topStory = result.results[m];
       // console.log(topStory);
       // pull 3 top stories from nytime to put in carousel
-      if (m === 2) {
+      if (m === 3) {
         $('#story-one-img').attr('src', topStory.multimedia[4].url);
         $('#story-one-link').attr('href', topStory.short_url)
         $('#story-one-h3').text(topStory.title);
         $('story-one-p').text(topStory.abstract);
-      } else if (m === 3) {
+      } else if (m === 5) {
         $('#story-two-img').attr('src', topStory.multimedia[4].url);
         $('#story-two-link').attr('href', topStory.short_url)
         $('#story-two-h3').text(topStory.title);
         $('story-two-p').text(topStory.abstract);
-      } else {
+      } else if (m === 7){
         $('#story-three-img').attr('src', topStory.multimedia[4].url);
         $('#story-three-link').attr('href', topStory.short_url)
         $('#story-three-h3').text(topStory.title);
