@@ -22,7 +22,7 @@ function weatherMaker() {
     dataType: 'jsonp',
     method: 'GET',
   }).then(function(response) {
-    console.log(response);
+    // console.log(response);
     const weatherIcon = $('<img>').attr('src', response.current_observation.icon_url);
     weatherIcon.addClass('weather-image');
     const location = response.current_observation.display_location.full;
@@ -214,16 +214,16 @@ function loadCarosel() {
     method: 'GET',
   }).done(function(result) {
     console.log(result);
-    for (let m = 1; m < 4; m++) {
+    for (let m = 2; m < 5; m++) {
       const topStory = result.results[m];
       // console.log(topStory);
       // pull 3 top stories from nytime to put in carousel
-      if (m === 1) {
+      if (m === 2) {
         $('#story-one-img').attr('src', topStory.multimedia[4].url);
         $('#story-one-link').attr('href', topStory.short_url)
         $('#story-one-h3').text(topStory.title);
         $('story-one-p').text(topStory.abstract);
-      } else if (m === 2) {
+      } else if (m === 3) {
         $('#story-two-img').attr('src', topStory.multimedia[4].url);
         $('#story-two-link').attr('href', topStory.short_url)
         $('#story-two-h3').text(topStory.title);
